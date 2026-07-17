@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pocca"
+version = "0.1.0"
+description = """
+  Conversational analytics POC using DuckDB / Motherduck and CBS data. 
+  Ingestion through python using pocca-ingest. 
+  Transformation happens in pocca using dbt-core.  
+  Semantic layer is set up in cube-core. 
+  Application is built in poc-chatbot using Streamlit. 
+  LLM connections are built using Mistral. 
+  """
+dependencies = [
+  "duckdb",
+  "pandas",
+  "dbt-core",
+  "dbt-duckdb",
+  "python-dotenv",
+  "cbsodata"
+]
+requires-python = ">=3.10"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["ingestion*"]
+
+[tool.ruff]
+select = ["A", "E", "F", "W", "I", "RUF"]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
+
+[project.scripts]
+pocca-ingest = "ingestion.cbs_ingestion.run_ingest:main"
