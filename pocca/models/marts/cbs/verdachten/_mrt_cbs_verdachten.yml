@@ -1,0 +1,80 @@
+version: 2
+
+models: 
+  - name: mrt_cbs_verdachten
+    description: "{{ doc('tbl_mrt_cbs_verdachten') }}"
+    config: 
+      materialized: table
+    
+    columns: 
+      - name: id
+        description: "{{ doc('dim_id') }}"
+        tests: 
+          - not_null
+          - unique
+        
+      - name: jaar
+        description: "{{ doc('dim_jaar') }}"
+        tests: 
+          - not_null
+
+      - name: geslacht
+        description: "{{ doc('dim_geslacht') }}"
+        tests: 
+          - not_null
+
+      - name: min_leeftijd
+        description: "{{ doc('dim_min_leeftijd')}}"
+        tests: 
+          - not_null
+
+      - name: max_leeftijd 
+        description: "{{ doc('dim_max_leeftijd') }}"
+        tests: 
+          - not_null
+
+      - name: leeftijd_groep
+        description: "{{ doc('dim_leeftijd_groep') }}"
+        tests: 
+          - not_null
+
+      - name: geboorteland
+        description: "{{ doc('dim_geboorteland') }}"
+        tests: 
+          - not_null
+
+      - name: totaal_verdachten_van_misdrijven
+        description: "{{ doc('tpc_totaal_verdachten_van_misdrijven') }}"
+
+      - name: verdachten_van_vermogensmisdrijven
+        description: "{{ doc('tpc_verdachten_van_vermogensmisdrijven') }}"
+
+      - name: verdachten_van_vernieling_opb_orde
+        description: "{{ doc('tpc_verdachten_van_vernieling_opb_orde') }}"
+
+      - name: verdachten_van_verkeersmisdrijven
+        description: "{{ doc('tpc_verdachten_van_verkeersmisdrijven') }}"
+
+      - name: verdachten_van_drugsmisdrijven
+        description: "{{ doc('tpc_verdachten_van_drugsmisdrijven') }}"
+  
+      - name: verdachten_van_vuurwapenmisdrijven
+        description: "{{ doc('tpc_verdachten_van_vuurwapenmisdrijven') }}"
+
+      - name: totaal_verdachten_van_misdrijven_p10k
+        description: "{{ doc('tpc_totaal_verdachten_van_misdrijven_p10k') }}"
+
+      - name: verdachten_van_vermogensmisdrijven_p10k
+        description: "{{ doc('tpc_verdachten_van_vermogensmisdrijven_p10k') }}"
+
+      - name: verdachten_van_vernieling_opb_orde_p10k
+        description: "{{ doc('tpc_verdachten_van_vernieling_opb_orde_p10k') }}"
+
+      - name: verdachten_van_verkeersmisdrijven_p10k
+        description: "{{ doc('tpc_verdachten_van_verkeersmisdrijven_p10k') }}"
+
+      - name: verdachten_van_drugsmisdrijven_p10k
+        description: "{{ doc('tpc_verdachten_van_drugsmisdrijven_p10k') }}"
+  
+      - name: verdachten_van_vuurwapenmisdrijven_p10k
+        description: "{{ doc('tpc_verdachten_van_vuurwapenmisdrijven_p10k') }}"

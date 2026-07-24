@@ -1,0 +1,45 @@
+version: 2
+
+models: 
+  - name: stg_cbs_haltjongeren
+    description: "{{ doc('tbl_stg_haltjongeren') }}"
+    columns: 
+      - name: id
+        description: "{{doc('dim_id')}}"
+        tests:
+          - not_null
+          - unique
+
+      - name: jaar
+        description: "{{ doc('dim_jaar') }}"
+        tests: 
+          - not_null
+      
+      - name: delictgroep
+        description: "{{ doc('dim_delictgroep') }}"
+        tests: 
+          - not_null
+
+      - name: geslacht
+        description: "{{ doc('dim_geslacht') }}"
+        tests: 
+          - not_null
+
+      - name: leeftijd
+        description: "{{ doc('dim_leeftijd') }}"
+        tests: 
+          - not_null
+
+      - name: opleiding
+        description: "{{ doc('dim_opleiding') }}"
+        tests: 
+          - not_null
+
+      - name: halt_jongeren
+        description: "{{ doc('tpc_haltjongeren') }}"
+        
+      - name: halt_jongren_relatief
+        description: "{{ doc('tpc_haltjongeren_relatief') }}"
+
+      - name: refresh_date
+        description: "{{ doc('refresh_date')}}"

@@ -1,0 +1,119 @@
+time_spines:
+  - name: time_spine
+    model: ref('metricflow_time_spine')
+    time_column: date_day
+    grains:
+      - name: day
+        column: date_day
+      - name: week
+        column: date_day
+      - name: month
+        column: date_day
+      - name: quarter
+        column: date_day
+      - name: year
+        column: date_day
+
+semantic_models:
+  - name: haltjongeren
+    description: "{{ doc('tbl_int_haltjongeren') }}"
+    
+    model: ref('mrt_cbs_haltjongeren')
+    defaults:
+      agg_time_dimension: jaar
+
+    entities:
+      - name: haltjongeren_record
+        type: primary
+        expr: id
+        description: "Unieke ubservatie van een Halt-jongeren telling voor specifieke demografische groepen."
+    
+    dimensions:
+      - name: jaar
+        type: time
+        type_params:
+          time_granularity: year
+        expr: jaar
+        description: "{{ doc('dim_jaar') }}"
+
+      - name: delictgroep
+        type: categorical
+        expr: delictgroep
+        description: "{{ doc('dim_delictgroep') }}"
+
+      - name: geslacht
+        type: categorical
+        expr: geslacht
+        description: "{{ doc('dim_geslacht') }}"
+
+      - name: leeftijd
+        type: categorical
+        expr: leeftijd
+        description: "{{ doc('dim_leeftijd') }}"
+
+      - name: leeftijd_int
+        type: categorical
+        expr: leeftijd_int
+        description: "{{ doc('dim_leeftijd_int') }}"
+
+      - name: leeftijd_groep
+        type: categorical
+        expr: leeftijd_groep
+        description: "{{ doc('dim_leeftijd_groep') }}"
+
+      - name: opleiding
+        type: categorical
+        expr: opleiding
+        description: "{{ doc('dim_opleiding') }}"
+
+      - name: type_delict
+        type: categorical
+        expr: type_delict
+        description: "{{ doc('dim_type_delict') }}"
+
+    measures:
+      - name: halt_jongeren_sum
+        description: "{{ doc('tpc_haltjongeren') }}"
+        agg: sum
+        expr: halt_jongeren
+
+      - name: halt_jongeren_relatief_sum
+        description: "{{ doc('tpc_haltjongeren_relatief') }}"
+        agg: sum
+        expr: halt_jongeren_relatief
+
+metrics:
+  - name: totaal_halt_jongeren
+    label: "Totaal Halt-jongeren"
+    description: "Het totaal aantal jongeren dat is doorverwezen naar Halt."
+    type: simple
+    type_params:
+      measure: halt_jongeren_sum
+
+  - name: totaal_misdrijf
+    label: "Totaal misdrijf"
+    description: "Het totaal aantal jongeren dat naar Halt is gestuurd vanwege het plegen van een misdrijf."
+    type: simple
+    type_params:
+      measure: halt_jongeren_sum
+    filter: "{{ Dimension('haltjongeren_record__type_delict') }} = 'misdrijf'"
+
+  - name: totaal_overtreding
+    label: "Totaal overtreding"
+    description: "Het totaal aantal jongeren dat naar Halt is gestuurd vanwege het begaan van een overtreding."
+    type: simple
+    type_params:
+      measure: halt_jongeren_sum
+    filter: "{{ Dimension('haltjongeren_record__type_delict') }} = 'overtreding'"
+
+  - name: misdrijf_vs_overtreding_ratio
+    label: "Misdrijf/Overtreding Ratio"
+    description: "De ratio van het aantal misdrijven over het aantal overtredingen. "
+    type: ratio
+    type_params:
+      numerator: totaal_misdrijf
+      denominator: totaal_overtreding
+
+
+
+    

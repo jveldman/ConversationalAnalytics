@@ -1,0 +1,13 @@
+pocca:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: ../data/duckdb/warehouse.duckdb
+      schema: pocca
+    prod:
+      type: duckdb
+      path: "md:{{ env_var('MOTHERDUCK_DB', 'pocca') }}?motherduck_token={{ env_var('MOTHERDUCK_TOKEN') }}"
+      threads: 4
+      database: "{{ env_var('MOTHERDUCK_DB', 'pocca') }}"  
+      schema: pocca
