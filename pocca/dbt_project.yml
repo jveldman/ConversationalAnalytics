@@ -1,0 +1,22 @@
+name: pocca
+version: 1.0.0
+config-version: 2
+profile: pocca
+model-paths: ["models"]
+
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+on-run-start: "{{ log('Running dbt with target: ' ~ target.name ~ ' (' ~ target.path ~ ')', info=True) }}"
+
+models:
+  semantic_app: 
+    staging: 
+      +schema: staging
+    intermediate: 
+      +schema: intermediate
+    marts: 
+      +schema: mart
+    time_spine: 
+      +schema: time_spine
+    seeds: 
+      + schema: seeds

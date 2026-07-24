@@ -12,3 +12,9 @@ data/
 __pycache__
 /
 *.egg-info
+
+# dbt 
+logs/
+target/
+.user.yml
+dbt_packages/

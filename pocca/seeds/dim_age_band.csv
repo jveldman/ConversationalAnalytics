@@ -1,0 +1,8 @@
+age_band_label,age_min,age_max,sort_order
+12 tot 18 jaar,12,17,1
+18 tot 23 jaar,18,22,2
+23 tot 45 jaar,24,44,3
+45 tot 65 jaar,45,64,4
+65+,65,,5
+Onbekend,,,98
+Totaal,,,99

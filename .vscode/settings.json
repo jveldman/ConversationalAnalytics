@@ -1,0 +1,19 @@
+{
+    "duckdb.databases": [
+        {
+            "alias": "warehouse",
+            "type": "file",
+            "path": "c:\\Users\\jjhve\\Documents\\Personal\\GitHub\\ConversationalAnalytics\\data\\duckdb\\warehouse.duckdb",
+            "readOnly": true,
+            "attached": false
+        }
+    ],
+    "duckdb.defaultDatabase": "warehouse",
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter.notebook.ipynb",
+        "*.parquet": "duckdb.dataFileViewer",
+        "*.csv": "duckdb.dataFileViewer",
+        "*.tsv": "duckdb.dataFileViewer",
+        "*.xlsx": "duckdb.dataFileViewer"
+    }
+}

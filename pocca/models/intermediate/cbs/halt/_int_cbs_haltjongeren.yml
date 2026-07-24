@@ -1,0 +1,129 @@
+version: 2
+
+models: 
+  - name: int_cbs_haltjongeren
+    description: "{{ doc('tbl_int_haltjongeren') }}"
+    data_tests: 
+      - age_totals_match: 
+          arguments: 
+            group_by_cols: ['jaar', 'delictgroep', 'geslacht', 'opleiding']
+            total_flag_col: is_totaal_leeftijd
+            value_col: 'haltjongeren'
+            false_cols: ['is_totaal_halt', 'is_totaal_geslacht','is_totaal_opleiding', 'is_totaal_overtreding', 'is_totaal_misdrijf', 'is_totaal_halt']
+    columns: 
+      - name: id
+        description: "{{ doc('dim_id') }}"
+        tests:
+          - not_null
+          - unique
+
+      - name: jaar
+        description: "{{ doc('dim_jaar') }}"
+        tests: 
+          - not_null
+      
+      - name: delictgroep
+        description: "{{ doc('dim_delictgroep') }}"
+        tests: 
+          - not_null
+
+      - name: geslacht
+        description: "{{ doc('dim_geslacht') }}"
+        tests: 
+          - not_null
+
+      - name: leeftijd
+        description: "{{ doc('dim_leeftijd') }}"
+        tests: 
+          - not_null
+
+      - name: leeftijd_int
+        description: "{{ doc('dim_leeftijd_int') }}"
+      
+      - name: leeftijd_groep
+        description: "{{ doc('dim_leeftijd_groep') }}"
+        tests: 
+          - not_null
+
+      - name: opleiding
+        description: "{{ doc('dim_opleiding') }}"
+        tests: 
+          - not_null
+
+      - name: haltjongeren
+        description: "{{ doc('tpc_haltjongeren') }}"
+        
+      - name: haltjongeren_relatief
+        description: "{{ doc('tpc_haltjongeren_relatief') }}"
+
+      - name: is_misdrijf
+        description: "{{ doc('dim_is_misdrijf') }}"
+        tests: 
+          - not_null
+          - accepted_values: 
+              arguments:
+                values: [true, false]
+      
+      - name: is_overtreding
+        description: "{{ doc('dim_is_overtreding') }}"
+        tests: 
+          - not_null
+          - accepted_values:
+              arguments: 
+                values: [true, false]
+      
+      - name: is_totaal_misdrijf
+        description: "{{ doc('dim_is_totaal_misdrijf') }}"
+        tests: 
+          - not_null
+          - accepted_values: 
+              arguments:
+                values: [true, false]
+
+      - name: is_totaal_overtreding
+        description: "{{ doc('dim_is_totaal_overtreding') }}"
+        tests: 
+          - not_null
+          - accepted_values: 
+              arguments:
+                values: [true, false]        
+
+      - name: is_totaal_halt
+        description: "{{ doc('dim_is_totaal_halt') }}"
+        tests: 
+          - not_null
+          - accepted_values: 
+              arguments:
+                values: [true, false]        
+      
+      - name: is_totaal_geslacht
+        description: "{{ doc('dim_is_totaal_geslacht') }}"
+        tests: 
+          - not_null
+          - accepted_values: 
+              arguments:
+                values: [true, false]        
+
+      - name: is_totaal_leeftijd
+        description: "{{ doc('dim_is_totaal_leeftijd') }}"
+        tests: 
+          - not_null
+          - accepted_values: 
+              arguments:
+                values: [true, false]
+
+      - name: is_leeftijd_onbekend
+        description: "{{ doc('dim_is_leeftijd_onbekend') }}"
+        tests: 
+          - not_null
+          - accepted_values: 
+              arguments:
+                values: [true, false]
+
+      - name: is_totaal_opleiding
+        description: "{{ doc('dim_is_totaal_opleiding') }}"
+        tests: 
+          - not_null
+          - accepted_values: 
+              arguments:
+                values: [true, false]

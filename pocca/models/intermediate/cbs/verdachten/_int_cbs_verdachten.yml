@@ -1,0 +1,111 @@
+version: 2
+
+models: 
+  - name: int_cbs_verdachten
+    description: "{{ doc('tbl_int_cbs_verdachten') }}"
+    columns: 
+      - name: id
+        description: "{{doc('dim_id')}}"
+        tests:
+          - not_null
+          - unique
+
+      - name: jaar
+        description: "{{ doc('dim_jaar') }}"
+        tests: 
+          - not_null
+
+      - name: geslacht
+        description: "{{ doc('dim_geslacht') }}"
+        tests: 
+          - not_null
+
+      - name: min_leeftijd
+        description: "{{ doc('dim_min_leeftijd') }}"
+
+      - name: max_leeftijd
+        description: "{{ doc('dim_min_leeftijd') }}"
+
+      - name: leeftijd_groep
+        description: "{{ doc('dim_leeftijd_groep') }}"
+        tests: 
+          - not_null
+          
+      - name: geboorteland 
+        description: "{{ doc('dim_geboorteland') }}"
+        tests: 
+          - not_null
+
+      - name: herkomstland
+        description: "{{ doc('dim_herkomstland') }}"
+        tests: 
+          - not_null
+
+      - name: totaal_verdachten_van_misdrijven
+        description: "{{ doc('tpc_totaal_verdachten_van_misdrijven') }}"
+
+      - name: verdachten_van_vermogensmisdrijven
+        description: "{{ doc('tpc_verdachten_van_vermogensmisdrijven') }}"
+
+      - name: verdachten_van_vernieling_opb_orde
+        description: "{{ doc('tpc_verdachten_van_vernieling_opb_orde') }}"
+  
+      - name: verdachten_van_geweldsmisdrijven
+        description: "{{ doc('tpc_verdachten_van_geweldsmisdrijven') }}"
+
+      - name: verdachten_van_verkeersmisdrijven
+        description: "{{ doc('tpc_verdachten_van_verkeersmisdrijven') }}"
+    
+      - name: verdachten_van_drugsmisdrijven
+        description: "{{ doc('tpc_verdachten_van_drugsmisdrijven') }}"
+    
+      - name: verdachten_van_vuurwapenmisdrijven
+        description: "{{ doc('tpc_verdachten_van_vuurwapenmisdrijven') }}"
+
+      - name: totaal_verdachten_van_misdrijven_p10k
+        description: "{{ doc('tpc_totaal_verdachten_van_misdrijven_p10k') }}"
+
+      - name: verdachten_van_vermogensmisdrijven_p10k
+        description: "{{ doc('tpc_verdachten_van_vermogensmisdrijven_p10k') }}"
+
+      - name: verdachten_van_vernieling_opb_orde_p10k
+        description: "{{ doc('tpc_verdachten_van_vernieling_opb_orde_p10k') }}"
+  
+      - name: verdachten_van_geweldsmisdrijven_p10k
+        description: "{{ doc('tpc_verdachten_van_geweldsmisdrijven_p10k') }}"
+
+      - name: verdachten_van_verkeersmisdrijven_p10k
+        description: "{{ doc('tpc_verdachten_van_verkeersmisdrijven_p10k') }}"
+    
+      - name: verdachten_van_drugsmisdrijven_p10k
+        description: "{{ doc('tpc_verdachten_van_drugsmisdrijven_p10k') }}"
+    
+      - name: verdachten_van_vuurwapenmisdrijven_p10k
+        description: "{{ doc('tpc_verdachten_van_vuurwapenmisdrijven_p10k') }}"
+
+
+      - name: is_totaal_geslacht
+        description: "{{ doc('dim_is_totaal_geslacht') }}"
+        tests: 
+          - not_null
+
+
+      - name: is_totaal_leeftijd
+        description: "{{ doc('dim_is_totaal_leeftijd') }}"
+        tests: 
+          - not_null
+
+    
+      - name: is_totaal_geboorteland
+        description: "{{ doc('dim_is_totaal_geboorteland') }}"
+        tests: 
+          - not_null
+
+
+      - name: is_totaal_herkomstland
+        description: "{{ doc('dim_is_totaal_herkomstland') }}"
+        tests: 
+          - not_null
+
+      - name: refresh_date
+        description: "{{ doc('refresh_date')}}"
