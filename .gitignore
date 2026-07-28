@@ -1,6 +1,7 @@
 # Environment files
 .env*
 .venv
+.vscode
 
 # Git
 .gitattributes
@@ -18,3 +19,4 @@ logs/
 target/
 .user.yml
 dbt_packages/
+pocca/.dbt-cube-sync-state.json
