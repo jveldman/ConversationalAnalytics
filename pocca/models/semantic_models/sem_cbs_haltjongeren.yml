@@ -26,7 +26,7 @@ semantic_models:
       - name: haltjongeren_record
         type: primary
         expr: id
-        description: "Unieke ubservatie van een Halt-jongeren telling voor specifieke demografische groepen."
+        description: "{{ doc('dim_id')}}"
     
     dimensions:
       - name: jaar
