@@ -1,6 +1,7 @@
 # Environment files
 .env*
 .venv
+.vscode
 
 # Git
 .gitattributes
