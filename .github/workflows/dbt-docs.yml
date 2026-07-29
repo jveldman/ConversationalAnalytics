@@ -1,3 +1,12 @@
+name: Generate and Deploy dbt Docs
+
+on:
+  push:
+    branches: [ main, general_readme_update ]
+    paths:
+      - 'pocca/**'
+  workflow_dispatch:
+
 permissions:
   contents: read
   pages: write
