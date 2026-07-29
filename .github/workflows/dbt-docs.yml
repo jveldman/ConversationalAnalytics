@@ -41,6 +41,7 @@ jobs:
           cd pocca
           dbt deps
           dbt docs generate --static
+          touch target/.nojekyll
           cd ..
 
       - name: Deploy to GitHub Pages
