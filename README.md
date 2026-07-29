@@ -14,7 +14,7 @@
 ```mermaid
 flowchart TB
 
-    subgraph ingestion [Ingestion: run_ingest.py]
+    subgraph ingestion [Ingestion: Python]
     RR[registry.py] -->|CBS Statline API| WR[writer.py]
     WR --> DL[cbs_data_loader]
     WR --> ML[cbs_meta_loader]
@@ -25,7 +25,7 @@ flowchart TB
     ML ---> DD
     IL ---> DD
 
-    subgraph dbt [dbt-core]
+    subgraph dbt [Transformation: dbt-core]
     DL --> ST[Staging: <br> Column Typing & Renaming]
     ST --> IM[Intermediate: <br> Filter & Transform]
     IM --> RP[Reporting Layer]
@@ -167,7 +167,7 @@ To explore the codebase and see the pipeline in action:
 
 ```bash
 # 1. Clone and install dependencies
-git clone https://github.com/your-username/ConversationalAnalytics.git
+git clone https://github.com/jveldman/ConversationalAnalytics.git
 cd ConversationalAnalytics
 python -m venv .venv
 source .venv/bin/activate  # or .\.venv\Scripts\activate on Windows
