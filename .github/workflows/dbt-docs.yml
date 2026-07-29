@@ -2,7 +2,7 @@ name: Generate and Deploy dbt Docs
 
 on:
   push:
-    branches: main
+    branches: [main, adding_github_pages]
     paths:
       - 'pocca/**'  # Only trigger when dbt project changes
 
