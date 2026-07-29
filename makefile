@@ -5,7 +5,7 @@ requirements.txt:
 venv: 
 	python -m venv .venv
 	.\.venv\Scripts\activate
-	pip intsall -r requirements.txt
+	pip install -r requirements.txt
 
 install: venv
 	pip install -e .
