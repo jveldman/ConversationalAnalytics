@@ -2,9 +2,12 @@ name: Generate and Deploy dbt Docs
 
 on:
   push:
-    branches: main
+    branches: [ main, general_readme_update ]
     paths:
-      - 'pocca/**'  # Only trigger when dbt project changes
+      - 'pocca/**'
+
+permissions:
+  contents: write
 
 jobs:
   deploy:
@@ -18,14 +21,26 @@ jobs:
           python-version: '3.10'
 
       - name: Install dbt
-        run: |
-          pip install dbt-core dbt-duckdb
+        run: pip install dbt-core dbt-duckdb
 
-      - name: Generate dbt docs
+      - name: Create dbt profiles.yml
+        run: |
+          mkdir -p ~/.dbt
+          cat > ~/.dbt/profiles.yml <<EOF
+          pocca:
+            target: dev
+            outputs:
+              dev:
+                type: duckdb
+                path: /tmp/warehouse.duckdb
+                schema: pocca
+          EOF
+
+      - name: Build dbt models and generate docs
         run: |
           cd pocca
           dbt deps
-          dbt docs generate
+          dbt docs generate --static
           cd ..
 
       - name: Deploy to GitHub Pages
@@ -33,4 +48,5 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./pocca/target
+          destination_dir: docs
           keep_files: false
