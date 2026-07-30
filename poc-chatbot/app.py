@@ -10,7 +10,7 @@ from cube_client import execute_cube_query
 from schema_fetcher import fetch_cube_schema
 from data_source_assistant import render_cube_selection_ui
 
-CUBE_NAME = os.getenv("CUBE_NAME", "mrt_cbs_haltjongeren")
+CUBE_NAME = os.getenv("CUBE_NAME")
 CUBEJS_API_SECRET = os.getenv("CUBEJS_API_SECRET")
 
 # Establish session_states to remember input between runs
@@ -180,7 +180,7 @@ else:
 
     
     # Use selected cube or fall back to default
-    active_cube = st.session_state.selected_cube or CUBE_NAME
+    active_cube = st.session_state.selected_cube or CUBE_NAME or "default"
     st.caption(f"Actieve cube: `{active_cube}`")
     
     if user_question := st.chat_input("Ask your question about the data or the context"):
