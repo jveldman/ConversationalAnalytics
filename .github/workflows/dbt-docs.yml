@@ -44,11 +44,21 @@ jobs:
                 schema: pocca
           EOF
 
-      - name: Build dbt models and generate docs
+      - name: Install dbt packages
         working-directory: ./pocca
-        run: |
-          dbt deps
-          dbt docs generate --static
+        run: dbt deps
+
+      - name: Seed data (if any seeds exist)
+        working-directory: ./pocca
+        run: dbt seed
+
+      - name: Build dbt models
+        working-directory: ./pocca
+        run: dbt run
+
+      - name: Generate dbt docs
+        working-directory: ./pocca
+        run: dbt docs generate --static
 
       # OPTIONAL: sanity check that index.html exists
       - name: List target directory
