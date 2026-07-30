@@ -46,21 +46,20 @@ jobs:
 
       - name: Install dbt packages
         working-directory: ./pocca
-        run: dbt deps
+        run: dbt deps --profiles-dir ~/.dbt
 
-      - name: Seed data (if any seeds exist)
+      - name: Seed data
         working-directory: ./pocca
-        run: dbt seed
+        run: dbt seed --profiles-dir ~/.dbt
 
       - name: Build dbt models
         working-directory: ./pocca
-        run: dbt run
+        run: dbt run --profiles-dir ~/.dbt
 
       - name: Generate dbt docs
         working-directory: ./pocca
-        run: dbt docs generate --static
+        run: dbt docs generate --static --profiles-dir ~/.dbt
 
-      # OPTIONAL: sanity check that index.html exists
       - name: List target directory
         run: ls -R ./pocca/target
 
