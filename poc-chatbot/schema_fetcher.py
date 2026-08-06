@@ -7,7 +7,7 @@ from auth import get_cube_token
 CUBE_API_SECRET = os.getenv("CUBEJS_API_SECRET")
 
 # CUBE_API_URL = os.getenv("CUBE_API_URL", "http://localhost:4000/cubejs-api/v1")
-CUBE_API_URL = os.getenv("CUBE_API_URL", "https://poc-conversationalanalytics.onrender.com/cubejs-api/v1")
+CUBE_API_URL = os.getenv("CUBE_API_URL")
 
 def fetch_cube_schema(cube_name: str) -> Dict[str, Any]:
     """

@@ -67,6 +67,52 @@ flowchart TB
     end
 ```
 
+## Quick Setup Guide
+
+To explore the codebase and see the pipeline in action, follow the guide underneath. Before starting, make sure to have set up the following requirements: 
+
+1. `.env` in repository root for API keys (Mistral, Cube-core, Cube url)
+2. Docker environment to run Cube in dev. 
+
+```bash
+# 1. Clone and install dependencies
+git clone https://github.com/jveldman/ConversationalAnalytics.git
+cd ConversationalAnalytics
+python -m venv .venv
+source .venv/bin/activate  # or .\.venv\Scripts\activate on Windows
+pip install -r requirements.txt
+
+# 2. Set up local database
+mkdir data/duckdb
+cd data/duckdb
+python -m duckdb -c "CREATE DATABASE 'warehouse.duckdb';" 
+
+# 3. Ingest sample CBS data
+pocca-ingest --db dev --list  # See available datasets
+pocca-ingest --db dev        # Load all to local DuckDB
+
+# 4. Transform with dbt
+cd ../pocca
+dbt deps
+dbt build --target dev
+
+# 5. Start semantic layer (requires Docker)
+cd ../cube-core
+dbt-cube-sync dbt-to-cube 
+  --manifest ../pocca/target/manifest.json 
+  --catalog ../pocca/target/catalog.json --output ./model/cubes
+docker-compose up -d
+# Access Cube UI at http://localhost:4000
+
+# 6. Run Streamlit app
+# Set mistral API key in .env file (root)
+cd ../poc-chatbot
+docker compose up
+streamlit run app.py
+```
+> [!IMPORTANT]  
+> A fully working application requires a running Cube-core environment (deployed in Render or Docker) and a Mistral API key. 
+
 ## Technical Highlights
 
 ### Architecture & Design Decisions
@@ -171,15 +217,22 @@ git clone https://github.com/jveldman/ConversationalAnalytics.git
 cd ConversationalAnalytics
 python -m venv .venv
 source .venv/bin/activate  # or .\.venv\Scripts\activate on Windows
-pip install -r requirements.txt dbt-core dbt-duckdb
+pip install -r requirements.txt
+
+# 2. Set up local database
+mkdir data/duckdb
+cd data/duckdb
+python -m duckdb -c "CREATE DATABASE 'warehouse.duckdb';" 
+
+
 
 # 2. Ingest sample CBS data
-cd ingestion
 pocca-ingest --db dev --list  # See available datasets
 pocca-ingest --db dev        # Load all to local DuckDB
 
 # 3. Transform with dbt
 cd ../pocca
+dbt deps
 dbt build --target dev
 
 # 4. Start semantic layer (requires Docker)

@@ -20,3 +20,6 @@ target/
 .user.yml
 dbt_packages/
 pocca/.dbt-cube-sync-state.json
+
+# Cube
+.dbt*

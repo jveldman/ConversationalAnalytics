@@ -6,7 +6,7 @@ import requests
 
 CUBE_API_SECRET = os.getenv("CUBEJS_API_SECRET")
 
-CUBE_API_URL = os.getenv("CUBE_API_URL", "https://poc-conversationalanalytics.onrender.com/cubejs-api/v1")
+CUBE_API_URL = os.getenv("CUBE_API_URL")
 
 def execute_cube_query(query: Dict[str, Any]) -> Dict[str, Any]:
     """

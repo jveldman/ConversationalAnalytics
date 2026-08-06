@@ -9,7 +9,7 @@ from auth import get_cube_token
 import requests
 from schema_fetcher import fetch_cube_schema
 
-CUBE_API_URL = os.getenv("CUBE_API_URL", "https://poc-conversationalanalytics.onrender.com/cubejs-api/v1")
+CUBE_API_URL = os.getenv("CUBE_API_URL")
 
 
 def get_available_cubes() -> List[str]:
