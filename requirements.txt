@@ -4,7 +4,7 @@ cbsodata==1.3.5
 dotenv==0.9.9
 duckdb==1.5.4
 pandas==3.0.4
-dbtcore
+# dbtcore
 dbt-duckdb
 dbt-cube-sync==0.1.0a42
 streamlit>=1.61.0
