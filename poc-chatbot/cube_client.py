@@ -3,6 +3,9 @@ import os
 from typing import Dict, Any
 from auth import get_cube_token
 import requests
+from dotenv import load_dotenv
+
+load_dotenv()
 
 CUBE_API_SECRET = os.getenv("CUBEJS_API_SECRET")
 
