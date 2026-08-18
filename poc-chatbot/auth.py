@@ -1,5 +1,8 @@
 import os 
 import jwt
+from dotenv import load_dotenv
+
+load_dotenv()
 
 CUBEJS_API_SECRET = os.getenv("CUBEJS_API_SECRET")
 

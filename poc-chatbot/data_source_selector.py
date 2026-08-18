@@ -8,6 +8,9 @@ from typing import List, Dict, Any
 from auth import get_cube_token
 import requests
 from schema_fetcher import fetch_cube_schema
+from dotenv import load_dotenv
+
+load_dotenv()
 
 CUBE_API_URL = os.getenv("CUBE_API_URL")
 
