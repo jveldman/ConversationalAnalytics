@@ -3,6 +3,6 @@
   "version": "1.0.0",
   "description": "Semantic layer for conversational analytics on Dutch CBS data",
   "dependencies": {
-    "@cubejs-backend/duckdb-driver": "^0.35.0"
+    "@cubejs-backend/duckdb-driver": "^0.35.81"
   }
 }
