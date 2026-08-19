@@ -26,14 +26,22 @@ def execute_cube_query(query: Dict[str, Any]) -> Dict[str, Any]:
         f"{CUBE_API_URL}/load",
         json={"query": query}, 
         headers = headers, 
-        timeout = 30
+        timeout = 60
     )
 
-    if not response.ok:
-        try:
-            detail = response.json()
-        except ValueError:
-            detail = response.text
-        raise ValueError(f"Cube API error ({response.status_code}): {detail}")
+    if "Continue wait" in str(response.text):
+        requests.post(
+            f"{CUBE_API_URL}/load",
+            json={"query": query}, 
+            headers = headers, 
+            timeout = 60
+        )
+        
+        if not response.ok:
+            try:
+                detail = response.json()
+            except ValueError:
+                detail = response.text
+            raise ValueError(f"Cube API error ({response.status_code}): {detail}")
 
     return response.json()
