@@ -72,30 +72,30 @@ semantic_models:
         description: "{{ doc('dim_type_delict') }}"
 
     measures:
-      - name: halt_jongeren_sum
+      - name: haltjongeren_sum
         description: "{{ doc('tpc_haltjongeren') }}"
         agg: sum
-        expr: halt_jongeren
+        expr: haltjongeren
 
-      - name: halt_jongeren_relatief_sum
+      - name: haltjongeren_relatief_sum
         description: "{{ doc('tpc_haltjongeren_relatief') }}"
         agg: sum
-        expr: halt_jongeren_relatief
+        expr: haltjongeren_relatief
 
 metrics:
-  - name: totaal_halt_jongeren
+  - name: totaal_haltjongeren
     label: "Totaal Halt-jongeren"
     description: "Het totaal aantal jongeren dat is doorverwezen naar Halt."
     type: simple
     type_params:
-      measure: halt_jongeren_sum
+      measure: haltjongeren_sum
 
   - name: totaal_misdrijf
     label: "Totaal misdrijf"
     description: "Het totaal aantal jongeren dat naar Halt is gestuurd vanwege het plegen van een misdrijf."
     type: simple
     type_params:
-      measure: halt_jongeren_sum
+      measure: haltjongeren_sum
     filter: "{{ Dimension('haltjongeren_record__type_delict') }} = 'misdrijf'"
 
   - name: totaal_overtreding
@@ -103,7 +103,7 @@ metrics:
     description: "Het totaal aantal jongeren dat naar Halt is gestuurd vanwege het begaan van een overtreding."
     type: simple
     type_params:
-      measure: halt_jongeren_sum
+      measure: haltjongeren_sum
     filter: "{{ Dimension('haltjongeren_record__type_delict') }} = 'overtreding'"
 
   - name: misdrijf_vs_overtreding_ratio
