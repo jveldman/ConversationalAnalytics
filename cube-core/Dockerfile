@@ -15,6 +15,7 @@ COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY package.json ./
-RUN npm install --omit=dev --allow-scripts --legacy-peer-deps
+COPY .npmrc ./
+RUN npm install --omit=dev
 
 COPY . .
