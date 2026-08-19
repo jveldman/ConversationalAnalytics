@@ -55,8 +55,8 @@ models:
               arguments:
                 values: ['overtreding', 'misdrijf', 'overig']
 
-      - name: halt_jongeren
+      - name: haltjongeren
         description: "{{ doc('tpc_haltjongeren') }}"
 
-      - name: halt_jongeren_relatief
+      - name: haltjongeren_relatief
         description: "{{ doc('tpc_haltjongeren_relatief') }}"
