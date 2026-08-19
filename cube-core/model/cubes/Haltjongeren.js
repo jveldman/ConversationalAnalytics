@@ -3,7 +3,7 @@ cube(`Haltjongeren`, {
   
   dimensions: {
     haltjongeren_record: {
-      sql: `id`,
+      sql: `haltjongeren_record`,
       type: `string`,
       title: `Haltjongeren Record`,
       description: `Unieke primary key voor elke rij in een tabel.`
@@ -71,7 +71,7 @@ cube(`Haltjongeren`, {
       type: `sum`,
       sql: `halt_jongeren`,
       title: `Halt Jongeren Sum`,
-      description: `Het totaal aantal Halt-jongeren dat is verwezen naar Halt voor het plegen van een strafbaar feit. Het betreft hier zowel overtredingen als misdrijven.
+      description: `Het totaal aantal Halt-jongeren dat is verwezen naar Halt voor het plegen van een strafbaar feit. Het betreft hier zowel overtredingen als misdrijven.
 Cijfers worden afgerond op tientallen, hierdoor komt het totaal soms niet overeen met de som der delen.`
     },
 
