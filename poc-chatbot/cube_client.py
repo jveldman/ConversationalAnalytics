@@ -4,6 +4,7 @@ from typing import Dict, Any
 from auth import get_cube_token
 import requests
 from dotenv import load_dotenv
+import time
 
 load_dotenv()
 
@@ -29,19 +30,20 @@ def execute_cube_query(query: Dict[str, Any]) -> Dict[str, Any]:
         timeout = 60
     )
 
-    if "Continue wait" in str(response.text):
-        requests.post(
+    if "Continue wait" in str(response.content):
+        time.sleep(2)
+        response = requests.post(  # ← Just add "response ="
             f"{CUBE_API_URL}/load",
-            json={"query": query}, 
-            headers = headers, 
-            timeout = 60
+            json={"query": query},
+            headers=headers,
+            timeout=60
         )
         
-        if not response.ok:
-            try:
-                detail = response.json()
-            except ValueError:
-                detail = response.text
-            raise ValueError(f"Cube API error ({response.status_code}): {detail}")
+    if not response.ok:
+        try:
+            detail = response.json()
+        except ValueError:
+            detail = response.text
+        raise ValueError(f"Cube API error ({response.status_code}): {detail}")
 
     return response.json()
