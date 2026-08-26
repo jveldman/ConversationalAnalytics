@@ -1,13 +1,14 @@
 import os
 import streamlit as st
 from dotenv import load_dotenv
+import pandas as pd
 
 # Load .env environment variables
 load_dotenv()
 
 from llm_translator import classify_intent, generate_cube_query, generate_context_answer
 from cube_client import execute_cube_query
-from schema_fetcher import fetch_cube_schema
+from graphql_client import execute_graphql_query
 from data_source_assistant import render_cube_selection_ui
 
 CUBE_NAME = os.getenv("CUBE_NAME")
@@ -26,6 +27,12 @@ if "selected_cube" not in st.session_state:
 if "selection_state" not in st.session_state:
     from data_source_assistant import DataSourceSelectionState
     st.session_state.selection_state = DataSourceSelectionState()
+
+def wants_graph(user_question: str) -> bool:
+    # Check if user wants a graph
+    graph_keywords = ['graph', 'grafiek', 'lijn', 'figuur', 'chart', 'plot', 'visualize', 'visualization', 'show me', 'trend', 'compare']
+    question_lower = user_question.lower()
+    return any(kw in question_lower for kw in graph_keywords)
 
 # Set up page layout with title and sidebar
 st.set_page_config(page_title="POC Conversational Analytics", page_icon="🗣️")
@@ -63,7 +70,7 @@ with st.sidebar:
             st.rerun()
 
 # Show the query and result from cube's request in json format 
-def render_data_answer(cube_query, result):
+def render_data_answer(cube_query, result, force_graph = False):
     with st.expander("Gegenereerd Cube-verzoek"):
         st.json(cube_query)
     with st.expander("Cube-code"):
@@ -75,15 +82,27 @@ def render_data_answer(cube_query, result):
     elif len(rows) == 1 and len(rows[0]) == 1:
         value = list(rows[0].values())[0]
         st.metric(label="Resultaat", value=value)
-    else:
-        st.table(rows)
+
+    else: 
+        df = pd.DataFrame(rows)
+        if force_graph or wants_graph(st.session_state.messages[-1]["content"] if st.session_state.messages else ""):
+                numeric_cols = df.select_dtypes(include=['number']).columns.tolist()
+                if numeric_cols and len(df.columns) >= 2:
+                    # First column = x-axis, first numeric = y-axis
+                    st.line_chart(df, x=df.columns[0], y=numeric_cols[0])
+                elif numeric_cols:
+                    st.line_chart(df[numeric_cols])
+                else:
+                    st.table(df)
+        else:
+            st.table(rows)
 
 # Create a chat mbubble for all input by user or the assistant
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         if message["role"] == "assistant":
             if message.get("type") == "data":
-                render_data_answer(message["cube_query"], message["result"])
+                render_data_answer(message["cube_query"], message["result"], message.get("wants_graph", False))
             else:
                 # metadata or selection messages
                 st.write(message["content"])
@@ -200,19 +219,30 @@ else:
                         st.session_state.messages.append(
                             {"role": "assistant", "type": "metadata", "content": answer}
                         )
-                    else:
+                    elif intent == "graph":
+                        cube_query = generate_cube_query(user_question, active_cube)
+                        result = execute_cube_query(cube_query)  # ← Still REST
+                        render_data_answer(cube_query, result, force_graph=True)
+                        st.session_state.messages.append({
+                        "role": "assistant",
+                        "type": "data",
+                        "content": "",
+                        "cube_query": cube_query,
+                        "result": result,
+                        "wants_graph": True
+                        })
+                    else:  # intent == "data"
                         cube_query = generate_cube_query(user_question, active_cube)
                         result = execute_cube_query(cube_query)
-                        render_data_answer(cube_query, result)
-                        st.session_state.messages.append(
-                            {
-                                "role": "assistant",
-                                "type": "data",
-                                "content": "",
-                                "cube_query": cube_query,
-                                "result": result,
-                            }
-                        )
+                        render_data_answer(cube_query, result, force_graph=False)
+                        st.session_state.messages.append({
+                            "role": "assistant",
+                            "type": "data",
+                            "content": "",
+                            "cube_query": cube_query,
+                            "result": result,
+                            "wants_graph": False
+                        })
                 except Exception as e:
                     error_text = f"Fout: {e}"
                     st.error(error_text)

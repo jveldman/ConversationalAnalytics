@@ -3,3 +3,4 @@ requests
 mistralai
 python-dotenv
 pyjwt
+pandas

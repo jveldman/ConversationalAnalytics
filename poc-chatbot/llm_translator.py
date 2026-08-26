@@ -22,22 +22,29 @@ def _get_client() -> Mistral:
 
 
 def classify_intent(user_question: str) -> str:
+    
     client = _get_client()
-    prompt = f"""Classify the user question into exactly one label: "data" or "metadata".
+    prompt = f"""Classify the user question into exactly one label: "data", "metadata" or "graph".
 
-- "data": asks for counts, totals, trends, comparisons, filters on real data.
+- "data": asks for counts, totals, comparisons, filters on real data.
 - "metadata": asks what a field, column, or concept means/definitions.
+- "graph": asks for a visualisation on real data, for example trends, graphs, lines and figures. 
 
 Question: {user_question}
 
-Respond with only one word: data or metadata."""
+Respond with only one word: data, metadata or graph."""
     response = client.chat.complete(
         model=MODEL,
         messages=[{"role": "user", "content": prompt}],
         temperature=0,
     )
     label = (response.choices[0].message.content or "").strip().lower()
-    return "metadata" if "meta" in label else "data"
+    if "graph" in label: 
+        return "graph"
+    elif "meta" in label:
+        return "metadata"
+    else: 
+        return "data"
 
 
 def _fix_time_filters(query: Dict[str, Any], cube_name: str) -> Dict[str, Any]:
@@ -156,3 +163,45 @@ Answer in 2-4 sentences, in plain language."""
         temperature=0.2,
     )
     return (response.choices[0].message.content or "").strip() or "I don't have that definition documented in the schema."
+
+# Add to llm_translator.py
+def generate_graphql_query(user_question: str, cube_name: str) -> str:
+ 
+    cube_schema = fetch_cube_schema(cube_name)
+    client = _get_client()
+
+    dims = ", ".join(d["name"] for d in cube_schema["dimensions"])
+    meas = ", ".join(m["name"] for m in cube_schema["measures"])
+
+    prompt = f"""You are a Cube.js GraphQL query generator. Convert the natural language question
+    into a valid Cube.js GraphQL query for the cube `{cube_schema['cube_name']}`.
+
+    Cube Schema:
+    - Cube Name: {cube_schema['cube_name']}
+    - Dimensions: {dims}
+    - Measures: {meas}
+
+    Rules:
+    1. Always prefix dimensions/measures with the cube name, e.g., {cube_schema['cube_name']}.count
+    2. Use proper GraphQL syntax with {{ measures }} and {{ dimensions }}
+    3. For time fields (jaar, date, datum), use dateRange filters
+    4. Output ONLY the GraphQL query string, no markdown, no explanation
+
+    Example:
+    Question: "How many crimes in 2023?"
+    Output: "{{ measures: [{cube_schema['cube_name']}.count] dimensions: [] filters: [{{ dimension: {cube_schema['cube_name']}.jaar dateRange: [2023-01-01, 2023-12-31] }}] }}"
+
+    Question: {user_question}
+    """
+
+    response = client.chat.complete(
+            model=MODEL,
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0,
+    )
+
+    raw_content = response.choices[0].message.content
+    if not raw_content or not raw_content.strip():
+        raise ValueError("Mistral returned an empty response.")
+
+    return raw_content.strip()
