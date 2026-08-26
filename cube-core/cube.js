@@ -6,7 +6,4 @@ module.exports = {
   driverFactory: () => new DuckDBDriver({
     database: process.env.CUBEJS_DB_DUCKDB_DATABASE_PATH,
   }),
-  api: {
-    graphql: true
-  }
 };
