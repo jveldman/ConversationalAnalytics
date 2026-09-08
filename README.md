@@ -207,47 +207,6 @@ This proof of concept aims to show users and providers the added value of data g
 
 ---
 
-## Quick Setup for Reviewers
-
-To explore the codebase and see the pipeline in action:
-
-```bash
-# 1. Clone and install dependencies
-git clone https://github.com/jveldman/ConversationalAnalytics.git
-cd ConversationalAnalytics
-python -m venv .venv
-source .venv/bin/activate  # or .\.venv\Scripts\activate on Windows
-pip install -r requirements.txt
-
-# 2. Set up local database
-mkdir data/duckdb
-cd data/duckdb
-python -m duckdb -c "CREATE DATABASE 'warehouse.duckdb';" 
-
-
-
-# 2. Ingest sample CBS data
-pocca-ingest --db dev --list  # See available datasets
-pocca-ingest --db dev        # Load all to local DuckDB
-
-# 3. Transform with dbt
-cd ../pocca
-dbt deps
-dbt build --target dev
-
-# 4. Start semantic layer (requires Docker)
-cd ../cube-core
-dbt-cube-sync dbt-to-cube 
-  --manifest ../pocca/target/manifest.json 
-  --catalog ../pocca/target/catalog.json --output ./model/cubes
-docker-compose up -d
-# Access Cube UI at http://localhost:4000
-```
-
-> **Note**: Full LLM integration requires Mistral API key. For code review, steps 1-3 demonstrate the complete ETL pipeline.
-
----
-
 ## Project Structure
 
 ```readme
