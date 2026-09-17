@@ -14,7 +14,3 @@ clean:
 	rm -rf __pychache__
 	rm -rf .venv
 	rm *.egg-info
-
-run_dev:
-	cd pocca && dbt build --target dev && dbt compile
-	cd cube-core && ./sync_cubes.sh && docker-compose down && docker-compose up -d  
