@@ -110,6 +110,7 @@ cd ../poc-chatbot
 docker compose up
 streamlit run app.py
 ```
+
 > [!IMPORTANT]  
 > A fully working application requires a running Cube-core environment (deployed in Render or Docker) and a Mistral API key. 
 

@@ -71,6 +71,26 @@ semantic_models:
         expr: type_delict
         description: "{{ doc('dim_type_delict') }}"
 
+      # - name: data_owner
+      #   type: categorical
+      #   expr: ownership.data_owner
+      #   description: "{{ doc('dim_data_owner')}}"
+
+      # - name: data_steward
+      #   type: categorical
+      #   expr: ownership.data_steward
+      #   description: "{{ doc('dim_data_steward')}}"
+
+      # - name: data_steward_email
+      #   type: categorical
+      #   expr: ownership.data_steward_email
+      #   description: "{{ doc('dim_data_steward_email')}}"
+
+      # - name: model_type
+      #   type: categorical
+      #   expr: ownership.model_type
+      #   description: "{{ doc('dim_model_type')}}"
+
     measures:
       - name: haltjongeren_sum
         description: "{{ doc('tpc_haltjongeren') }}"

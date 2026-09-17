@@ -3,10 +3,17 @@ cube(`Haltjongeren`, {
   
   dimensions: {
     haltjongeren_record: {
-      sql: `haltjongeren_record`,
+      sql: `id`,
       type: `string`,
       title: `Haltjongeren Record`,
       description: `Unieke primary key voor elke rij in een tabel.`
+    },
+
+    model: {
+      sql: `model_name`,
+      type: `string`,
+      title: `Model`,
+      description: `Links to the ownership metadata via model_name.`
     },
 
     jaar: {
@@ -71,7 +78,7 @@ cube(`Haltjongeren`, {
       type: `sum`,
       sql: `haltjongeren`,
       title: `Haltjongeren Sum`,
-      description: `Het totaal aantal Halt-jongeren dat is verwezen naar Halt voor het plegen van een strafbaar feit. Het betreft hier zowel overtredingen als misdrijven.
+      description: `Het totaal aantal Halt-jongeren dat is verwezen naar Halt voor het plegen van een strafbaar feit. Het betreft hier zowel overtredingen als misdrijven.
 Cijfers worden afgerond op tientallen, hierdoor komt het totaal soms niet overeen met de som der delen.`
     },
 
@@ -82,18 +89,18 @@ Cijfers worden afgerond op tientallen, hierdoor komt het totaal soms niet overee
       description: `Het aantal Halt-jongeren per 10 000 inwoners uit de geselecteerde bevolkingsgroep dat is verwezen naar Halt voor het plegen van een strafbaar feit. Het betreft hier zowel overtredingen als misdrijven.`
     },
 
+    totaal_haltjongeren: {
+      type: `sum`,
+      sql: `haltjongeren`,
+      title: `Totaal Halt-jongeren`,
+      description: `Het totaal aantal jongeren dat is doorverwezen naar Halt.`
+    },
+
     misdrijf_vs_overtreding_ratio: {
       type: `number`,
       sql: `${totaal_misdrijf} / NULLIF(${totaal_overtreding}, 0)`,
       title: `Misdrijf/Overtreding Ratio`,
       description: `De ratio van het aantal misdrijven over het aantal overtredingen. `
-    },
-
-    totaal_overtreding: {
-      type: `sum`,
-      sql: `haltjongeren`,
-      title: `Totaal overtreding`,
-      description: `Het totaal aantal jongeren dat naar Halt is gestuurd vanwege het begaan van een overtreding.`
     },
 
     totaal_misdrijf: {
@@ -103,11 +110,11 @@ Cijfers worden afgerond op tientallen, hierdoor komt het totaal soms niet overee
       description: `Het totaal aantal jongeren dat naar Halt is gestuurd vanwege het plegen van een misdrijf.`
     },
 
-    totaal_haltjongeren: {
+    totaal_overtreding: {
       type: `sum`,
       sql: `haltjongeren`,
-      title: `Totaal Halt-jongeren`,
-      description: `Het totaal aantal jongeren dat is doorverwezen naar Halt.`
+      title: `Totaal overtreding`,
+      description: `Het totaal aantal jongeren dat naar Halt is gestuurd vanwege het begaan van een overtreding.`
     }
   }
 });
