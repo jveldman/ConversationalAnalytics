@@ -9,6 +9,8 @@ services:
       - CUBEJS_DB_DUCKDB_DATABASE_PATH=/data/warehouse.duckdb
       - DEVSERVER=true
       - CUBEJS_GRAPHQL=true
+      - CUBEJS_API_SECRET=${CUBEJS_API_SECRET}
+      - CUBEJS_DEV_MODE=true
     volumes:
       - .:/cube/conf
       - ../data/duckdb:/data

@@ -82,7 +82,7 @@ def render_cube_selection_ui(
     # Filter to only show matched cubes, or all if matching failed
     cubes_to_show = [
         c for c in available_cubes 
-        if c["name"].lower() in [m.lower() for m in matched_cubes]
+        if c["name"].lower() in [m.get("name","").lower() if isinstance(m, dict) else str(m).lower() for m in matched_cubes]
     ] if matched_cubes else available_cubes
     
     # Limit to top 5 for UI clarity

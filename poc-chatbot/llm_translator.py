@@ -25,7 +25,7 @@ def classify_intent(user_question: str) -> str:
     client = _get_client()
     prompt = f"""Classify the user question into exactly one label: "data" or "metadata".
 
-- "data": asks for counts, totals, trends, comparisons, filters on real data.
+- "data": asks for counts, totals, trends, comparisons, filters on real data. 
 - "metadata": asks what a field, column, or concept means/definitions.
 
 Question: {user_question}
