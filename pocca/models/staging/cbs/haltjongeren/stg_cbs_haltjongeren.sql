@@ -1,7 +1,8 @@
+
+-- Trim and clean data
+
 WITH source AS (
-    SELECT 
-        *
-    FROM {{ source('raw_cbs', 'cbs_data_haltjongeren') }}
+    SELECT * FROM {{ source('raw_cbs', 'cbs_data_haltjongeren') }}
 )
 
 SELECT
@@ -19,6 +20,5 @@ SELECT
         WHEN TRIM(HaltJongerenRelatief_2) IN ('', '.') THEN NULL 
         ELSE CAST(TRIM(HaltJongerenRelatief_2) AS INTEGER) 
     END AS haltjongeren_relatief, 
-    CURRENT_DATE() AS refresh_date, 
-    '{{this.name}}' AS model_name
+    CURRENT_DATE() AS refresh_date
 FROM source

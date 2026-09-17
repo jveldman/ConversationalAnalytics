@@ -22,8 +22,7 @@ SELECT
     END AS type_delict,
     haltjongeren, 
     haltjongeren_relatief, 
-    refresh_date, 
-    '{{this.name}}' AS model_name
+    refresh_date
 FROM src 
 WHERE 
     is_totaal_misdrijf = FALSE

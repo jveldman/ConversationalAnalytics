@@ -90,8 +90,7 @@ SELECT
     is_totaal_leeftijd, 
     is_leeftijd_onbekend, 
     is_totaal_opleiding, 
-    refresh_date, 
-    '{{this.name}}' AS model_name
+    refresh_date
 FROM parsed_ages
 
 
