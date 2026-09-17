@@ -5,3 +5,5 @@ dbt-cube-sync dbt-to-cube \
   --manifest ../pocca/target/manifest.json \
   --catalog ../pocca/target/catalog.json \
   --output ./model/cubes
+
+python3 add_governance.py

@@ -1,19 +1,13 @@
 cube(`Haltjongeren`, {
   sql: `SELECT * FROM pocca.mrt_cbs_haltjongeren`,
   
+description: `Owner: CBS | Steward: Jelle | Steward Email: generic@emailadres.nl | Contains Pii: False | Source: https://www.cbs.nl/nl-nl/cijfers/detail/85993NED`, 
   dimensions: {
     haltjongeren_record: {
       sql: `id`,
       type: `string`,
       title: `Haltjongeren Record`,
       description: `Unieke primary key voor elke rij in een tabel.`
-    },
-
-    model: {
-      sql: `model_name`,
-      type: `string`,
-      title: `Model`,
-      description: `Links to the ownership metadata via model_name.`
     },
 
     jaar: {

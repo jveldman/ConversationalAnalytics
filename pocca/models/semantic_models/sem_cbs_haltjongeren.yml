@@ -17,10 +17,17 @@ time_spines:
 semantic_models:
   - name: haltjongeren
     description: "{{ doc('tbl_int_haltjongeren') }}"
-    
     model: ref('mrt_cbs_haltjongeren')
+    config: 
+      meta: 
+        owner: CBS
+        steward: Jelle
+        steward_email: generic@emailadres.nl
+        contains_pii: false
+        source: https://www.cbs.nl/nl-nl/cijfers/detail/85993NED
     defaults:
       agg_time_dimension: jaar
+
 
     entities:
       - name: haltjongeren_record
