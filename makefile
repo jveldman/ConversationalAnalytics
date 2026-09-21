@@ -23,4 +23,3 @@ run_dev:
 run_prod: 
 	cd ingestion && pocca-ingest --db prod
 	cd pocca && dbt build --target prod && dbt compile
-	
