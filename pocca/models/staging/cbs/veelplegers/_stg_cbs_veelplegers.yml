@@ -1,0 +1,35 @@
+version: 2
+
+models:
+  - name: stg_cbs_veelplegers
+    description: "{{ doc('tbl_stg_veelplegers') }}"
+    columns:
+      - name: id
+        description: "{{ doc('dim_id') }}"
+        tests:
+          - not_null
+          - unique
+
+      - name: geslacht
+        description: "{{ doc('dim_geslacht') }}"
+        tests:
+          - not_null
+
+      - name: leeftijd
+        description: "{{ doc('dim_leeftijd') }}"
+        tests:
+          - not_null
+
+      - name: recidive
+        description: "{{ doc('dim_recidive') }}"
+
+      - name: jaar
+        description: "{{ doc('dim_jaar') }}"
+        tests:
+          - not_null
+
+      - name: verdachten_van_misdrijven
+        description: "{{ doc('tpc_verdachten_van_misdrijven') }}"
+
+      - name: refresh_date
+        description: "{{ doc('refresh_date') }}"

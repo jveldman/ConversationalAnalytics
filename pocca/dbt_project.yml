@@ -9,14 +9,14 @@ clean-targets: ["target", "dbt_packages"]
 on-run-start: "{{ log('Running dbt with target: ' ~ target.name ~ ' (' ~ target.path ~ ')', info=True) }}"
 
 models:
-  semantic_app: 
-    staging: 
+  pocca:
+    staging:
       +schema: staging
-    intermediate: 
+    intermediate:
       +schema: intermediate
-    marts: 
+    marts:
       +schema: mart
-    time_spine: 
+    time_spine:
       +schema: time_spine
-    seeds: 
-      + schema: seeds
+    seeds:
+      +schema: seeds
