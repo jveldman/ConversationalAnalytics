@@ -4,7 +4,9 @@ requirements.txt:
 
 venv: 
 	python -m venv .venv
-	.\.venv\Scripts\activate
+	@echo "Activating virtual environment..."
+	@echo "On Windows: .\.venv\Scripts\activate"
+	@echo "On macOS/Linux: source .venv/bin/activate"
 	pip install -r requirements.txt
 
 install: venv
