@@ -1,5 +1,6 @@
 # Environment files
 .env*
+!.env.example
 .venv
 .vscode
 
@@ -11,13 +12,12 @@ data/
 
 # Python
 __pycache__
-/
 *.egg-info
 
 # dbt 
 logs/
 target/
-.user.yml
+**.user.yml
 dbt_packages/
 pocca/.dbt-cube-sync-state.json
 

@@ -15,9 +15,19 @@ TIME_DIMENSION_HINTS = {"jaar", "date", "datum", "year"}
 
 
 def _get_client() -> Mistral:
+    """Get or create a Mistral API client.
+    
+    Returns:
+        Mistral client instance
+        
+    Raises:
+        RuntimeError: If MISTRAL_API_KEY is not set
+    """
     api_key = os.getenv("MISTRAL_API_KEY")
     if not api_key:
-        raise RuntimeError("MISTRAL_API_KEY is not set. Check your .env file.")
+        raise RuntimeError(
+            "MISTRAL_API_KEY is not set. Check your .env file or environment."
+        )
     return Mistral(api_key=api_key)
 
 
@@ -131,17 +141,16 @@ def generate_context_answer(user_question: str, cube_name: str) -> str:
 
     if not has_descriptions:
         return (
-            "No descriptions are defined in the Cube data model for this cube yet. "
-            "Add a `description` property to the cube, dimensions, or measures in your "
-            "Cube model file so I can explain them."
+            "Er zijn nog geen beschrijvingen gedefinieerd in het Cube data model voor deze cube nog. "
+            "Voeg een `description` eigenschap toe aan de cube, dimensions, or measures in je "
+            "Cube model bestand zodat ik ze kan uitleggen."
         )
 
     context_text = schema_as_context_text(cube_schema)
     client = _get_client()
 
-    prompt = f"""You are a data catalog assistant. Use ONLY the schema context below to answer
-the user's question about what a table or column means. If the answer isn't in the context,
-say you don't have that definition documented.
+    prompt = f"""Je bent een data catalog assistent. Gebruik ALLEEN de schema context hieronder om het gebruiker's vraag over wat een tabel of kolom betekent te beantwoorden. Als het antwoord niet in de context staat,
+zeg dan dat je die definitie niet hebt gedocumenteerd.
 
 Schema context:
 {context_text}

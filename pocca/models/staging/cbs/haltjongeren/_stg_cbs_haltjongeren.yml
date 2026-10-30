@@ -35,10 +35,12 @@ models:
         tests: 
           - not_null
 
-      - name: halt_jongeren
+      - name: haltjongeren
         description: "{{ doc('tpc_haltjongeren') }}"
+        tests:
+          - not_null
         
-      - name: halt_jongren_relatief
+      - name: haltjongeren_relatief
         description: "{{ doc('tpc_haltjongeren_relatief') }}"
 
       - name: refresh_date

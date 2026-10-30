@@ -192,7 +192,7 @@ else:
             with st.spinner("Zoeken..."):
                 try:
                     intent = classify_intent(user_question)
-                    st.caption(f"Gedetecteerde intentie: **{intent}**")
+                    st.caption(f"De gebruiker zoekt naar **{intent}**")
 
                     if intent == "metadata":
                         answer = generate_context_answer(user_question, active_cube)

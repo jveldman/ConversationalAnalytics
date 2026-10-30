@@ -83,7 +83,7 @@ source .venv/bin/activate  # or .\.venv\Scripts\activate on Windows
 pip install -r requirements.txt
 
 # 2. Set up local database
-mkdir data/duckdb
+mkdir -p data/duckdb
 cd data/duckdb
 python -m duckdb -c "CREATE DATABASE 'warehouse.duckdb';" 
 

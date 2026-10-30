@@ -4,20 +4,25 @@ Module for selecting the appropriate Cube data source based on user needs.
 This is a new layer that sits on top of the existing chatbot.
 """
 import os
-from typing import List, Dict, Any
+from typing import List, Dict
 from auth import get_cube_token
 import requests
 from schema_fetcher import fetch_cube_schema
 from dotenv import load_dotenv
+
+import streamlit as st
 
 load_dotenv()
 
 CUBE_API_URL = os.getenv("CUBE_API_URL")
 
 
+@st.cache_data(ttl=300, show_spinner=False)
 def get_available_cubes() -> List[str]:
-    """
-    Get list of all available cubes.
+    """Get list of all available cubes from Cube API.
+    
+    Returns:
+        List of cube names available in Cube Core
     """
     headers = {
         "Content-Type": "application/json",

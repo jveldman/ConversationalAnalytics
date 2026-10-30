@@ -5,7 +5,7 @@ models:
     description: "{{ doc('tbl_int_cbs_verdachten') }}"
     columns: 
       - name: id
-        description: "{{doc('dim_id')}}"
+        description: "{{ doc('dim_id') }}"
         tests:
           - not_null
           - unique
@@ -22,9 +22,11 @@ models:
 
       - name: min_leeftijd
         description: "{{ doc('dim_min_leeftijd') }}"
+        tests:
+          - not_null
 
       - name: max_leeftijd
-        description: "{{ doc('dim_min_leeftijd') }}"
+        description: "{{ doc('dim_max_leeftijd') }}"
 
       - name: leeftijd_groep
         description: "{{ doc('dim_leeftijd_groep') }}"

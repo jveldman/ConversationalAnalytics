@@ -60,7 +60,7 @@ def render_cube_selection_ui(
     Returns: Selected cube name or None if not yet selected
     """
     # Generate matches using LLM
-    with st.spinner("Searching for datasources..."):
+    with st.spinner("Zoeken naar databronnen..."):
         match_json = generate_cube_match_query(user_question, available_cubes)
     
     try:
@@ -74,10 +74,10 @@ def render_cube_selection_ui(
     
     # Display reasoning
     if reasoning:
-        st.info(f"**Suggested datasources:**: {reasoning}")
+        st.info(f"**Best passende databron**: {reasoning}")
     
     # Display matched cubes as selectable options
-    st.subheader("Available datasources:")
+    st.subheader("Beschikbare databronnen:")
     
     # Filter to only show matched cubes, or all if matching failed
     cubes_to_show = [
@@ -96,15 +96,15 @@ def render_cube_selection_ui(
     
     # Also provide a dropdown for direct selection
     st.divider()
-    st.caption("Or select a datasource yourself:")
+    st.caption("Of selecteer zelf een databron:")
     all_cube_names = [c["name"] for c in available_cubes]
     selected = st.selectbox(
-        "Select a datasource:",
+        "Selecteer een databron:",
         options=all_cube_names,
         key="direct_cube_select"
     )
     
-    if st.button("Confirm choice", key="confirm_selection"):
+    if st.button("Bevestig keuze", key="confirm_selection"):
         return selected
     
     return None

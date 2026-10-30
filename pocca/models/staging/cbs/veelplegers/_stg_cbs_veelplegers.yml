@@ -1,0 +1,35 @@
+version: 2
+
+models:
+  - name: stg_cbs_veelplegers
+    description: "Staging model for CBS veelplegers (repeat offenders) data"
+    columns:
+      - name: id
+        description: "Unique identifier"
+        tests:
+          - not_null
+          - unique
+
+      - name: geslacht
+        description: "Gender"
+        tests:
+          - not_null
+
+      - name: leeftijd
+        description: "Age"
+        tests:
+          - not_null
+
+      - name: recidive
+        description: "Recidivism status"
+
+      - name: jaar
+        description: "Year"
+        tests:
+          - not_null
+
+      - name: verdachten_van_misdrijven
+        description: "Number of suspects for crimes"
+
+      - name: refresh_date
+        description: "Date when data was last refreshed"

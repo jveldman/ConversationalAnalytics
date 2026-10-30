@@ -5,13 +5,15 @@ from typing import Dict, Any
 from auth import get_cube_token
 from dotenv import load_dotenv
 
+import streamlit as st
+
 load_dotenv()
 
 CUBE_API_SECRET = os.getenv("CUBEJS_API_SECRET")
-
-# CUBE_API_URL = os.getenv("CUBE_API_URL", "http://localhost:4000/cubejs-api/v1")
 CUBE_API_URL = os.getenv("CUBE_API_URL")
 
+
+@st.cache_data(ttl=300, show_spinner=False)
 def fetch_cube_schema(cube_name: str) -> Dict[str, Any]:
     """
     Fetch cube schema dynamically from Cube Core.

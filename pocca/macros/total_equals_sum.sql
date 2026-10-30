@@ -1,3 +1,14 @@
+{# Macro to validate that the sum of parts equals the total value.
+
+This macro creates a CTE that checks if the sum of non-total rows equals the
+total row value, allowing for a small tolerance (30) to account for rounding.
+
+Args:
+    group_by_cols: List of columns to group by
+    total_flag_col: Column that identifies total rows (boolean)
+    value_col: Column containing the numeric values to sum
+    false_cols: List of columns that must be FALSE for non-total rows
+#}
 {% macro total_parts_cte(group_by_cols, total_flag_col, value_col, false_cols) -%}
 
 WITH subquery AS(
