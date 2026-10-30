@@ -2,34 +2,34 @@ version: 2
 
 models:
   - name: stg_cbs_veelplegers
-    description: "{{ doc('tbl_stg_veelplegers') }}"
+    description: "Staging model for CBS veelplegers (repeat offenders) data"
     columns:
       - name: id
-        description: "{{ doc('dim_id') }}"
+        description: "Unique identifier"
         tests:
           - not_null
           - unique
 
       - name: geslacht
-        description: "{{ doc('dim_geslacht') }}"
+        description: "Gender"
         tests:
           - not_null
 
       - name: leeftijd
-        description: "{{ doc('dim_leeftijd') }}"
+        description: "Age"
         tests:
           - not_null
 
       - name: recidive
-        description: "{{ doc('dim_recidive') }}"
+        description: "Recidivism status"
 
       - name: jaar
-        description: "{{ doc('dim_jaar') }}"
+        description: "Year"
         tests:
           - not_null
 
       - name: verdachten_van_misdrijven
-        description: "{{ doc('tpc_verdachten_van_misdrijven') }}"
+        description: "Number of suspects for crimes"
 
       - name: refresh_date
-        description: "{{ doc('refresh_date') }}"
+        description: "Date when data was last refreshed"
