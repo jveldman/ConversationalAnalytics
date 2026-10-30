@@ -15,9 +15,19 @@ TIME_DIMENSION_HINTS = {"jaar", "date", "datum", "year"}
 
 
 def _get_client() -> Mistral:
+    """Get or create a Mistral API client.
+    
+    Returns:
+        Mistral client instance
+        
+    Raises:
+        RuntimeError: If MISTRAL_API_KEY is not set
+    """
     api_key = os.getenv("MISTRAL_API_KEY")
     if not api_key:
-        raise RuntimeError("MISTRAL_API_KEY is not set. Check your .env file.")
+        raise RuntimeError(
+            "MISTRAL_API_KEY is not set. Check your .env file or environment."
+        )
     return Mistral(api_key=api_key)
 
 

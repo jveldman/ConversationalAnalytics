@@ -2,10 +2,10 @@ cube(`Haltjongeren`, {
   sql: `SELECT * FROM pocca.mrt_cbs_haltjongeren`,
   
   dimensions: {
-    haltjongeren_record: {
-      sql: `haltjongeren_record`,
+    id: {
+      sql: `id`,
       type: `string`,
-      title: `Haltjongeren Record`,
+      title: `ID`,
       description: `Unieke primary key voor elke rij in een tabel.`
     },
 
@@ -39,7 +39,7 @@ cube(`Haltjongeren`, {
 
     leeftijd_int: {
       sql: `leeftijd_int`,
-      type: `string`,
+      type: `number`,
       title: `Leeftijd Int`,
       description: `De leeftijd als geheel getal (integer) voor rekenoperaties.`
     },
@@ -71,7 +71,8 @@ cube(`Haltjongeren`, {
       type: `sum`,
       sql: `haltjongeren`,
       title: `Haltjongeren Sum`,
-      description: `Het totaal aantal Halt-jongeren dat is verwezen naar Halt voor het plegen van een strafbaar feit. Het betreft hier zowel overtredingen als misdrijven.
+      description: `Het totaal aantal Halt-jongeren dat is verwezen naar Halt voor het plegen van een strafbaar feit. Het betreft hier zowel overtredingen als misdrijven.
+
 Cijfers worden afgerond op tientallen, hierdoor komt het totaal soms niet overeen met de som der delen.`
     },
 
