@@ -28,8 +28,11 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install dbt (duckdb)
-        run: pip install dbt-core dbt-duckdb
+      - name: Install dependencies
+        run: pip install dbt-core dbt-duckdb ruff
+
+      - name: Run Python linting
+        run: ruff check ingestion/ poc-chatbot/ pocca/
 
       - name: Create dbt profiles.yml
         run: |
@@ -55,6 +58,10 @@ jobs:
       - name: Build dbt models
         working-directory: ./pocca
         run: dbt run --profiles-dir ~/.dbt
+
+      - name: Run dbt tests
+        working-directory: ./pocca
+        run: dbt test --profiles-dir ~/.dbt
 
       - name: Generate dbt docs
         working-directory: ./pocca
